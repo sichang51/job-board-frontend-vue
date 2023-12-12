@@ -36,16 +36,33 @@ export default {
 
 <template>
   <div class="home">
+    <h1>New Job</h1>
+    <div>
+      Company Id:
+      <input type="integer" v-model="newJobParams.company_id" />
+      Title:
+      <input type="text" v-model="newJobParams.title" />
+      Description:
+      <input type="text" v-model="newJobParams.description" />
+      Url:
+      <input type="text" v-model="newJobParams.url" />
+      Location:
+      <input type="text" v-model="newJobParams.location" />
+      Active:
+      <input v-model="newJobParams.active" />
+      Salary Range:
+      <input type="text" v-model="newJobParams.salary_range" />
+      <button v-on:click="createJob()">Create Job</button>
+    </div>
     <h1>All Jobs</h1>
     <div v-for="job in jobs" v-bind:key="job.id">
       <h2>{{ job.title }}</h2>
       <p>Description: {{ job.description }}</p>
-      <a src="{{" job.url }}>Link to listing</a>
+      <a :src="job.url">Link to listing</a>
       <p>Location: {{ job.location }}</p>
-      <p>Salary: {{ job.salary }}</p>
+      <p>Salary: {{ job.salary_range }}</p>
     </div>
   </div>
 </template>
 
 <style></style>
-company_id, title, description, url, location, active, salary_range
