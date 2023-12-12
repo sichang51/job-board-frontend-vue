@@ -75,7 +75,7 @@ export default {
         <p>Description: {{ currentJob.description }}</p>
         <p>URL: {{ currentJob.url }}</p>
         <p>Location: {{ currentJob.location }}</p>
-        <p>Salary: {{ currentJob.salary }}</p>
+        <p>Salary Range: {{ currentJob.salary_range }}</p>
       </form>
     </dialog>
   </div>
