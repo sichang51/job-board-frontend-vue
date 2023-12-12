@@ -26,7 +26,7 @@ export default {
     <div v-for="job in jobs" v-bind:key="job.id">
       <h2>{{ job.title }}</h2>
       <p>Description: {{ job.description }}</p>
-      <a src="{{" job.url }}>Link to listing</a>
+      <a :src="job.url">Link to listing</a>
       <p>Location: {{ job.location }}</p>
       <p>Salary: {{ job.salary }}</p>
     </div>
