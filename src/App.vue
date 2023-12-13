@@ -6,6 +6,7 @@ export default {
       message: "Welcome to Vue.js!",
       jobs: [],
       newJobParams: {},
+      currentJob: {},
     };
   },
   created: function () {
@@ -35,6 +36,10 @@ export default {
           console.log("jobs create error", error.response);
         });
       console.log(this.newJobParams);
+    },
+    showJob: function (job) {
+      this.currentJob = job;
+      document.querySelector("#job-details").showModal();
     },
   },
 };
@@ -74,7 +79,18 @@ export default {
       <a :src="job.url">Link to listing</a>
       <p>Location: {{ job.location }}</p>
       <p>Salary: {{ job.salary_range }}</p>
+      <button v-on:click="showJob(job)">More Info</button>
     </div>
+    <dialog id="job-details">
+      <form method="dialog">
+        <h1>Job Info</h1>
+        <p>Title: {{ currentJob.title }}</p>
+        <p>Description: {{ currentJob.description }}</p>
+        <p>URL: {{ currentJob.url }}</p>
+        <p>Location: {{ currentJob.location }}</p>
+        <p>Salary Range: {{ currentJob.salary_range }}</p>
+      </form>
+    </dialog>
   </div>
 </template>
 
