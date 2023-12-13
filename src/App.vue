@@ -35,6 +35,13 @@ export default {
       this.currentJob = job;
       document.querySelector("#job-details").showModal();
     },
+    destroyJob: function (job) {
+      axios.delete(`/jobs/${job.id}.json`).then((response) => {
+        console.log("jobs destroy", response);
+        var index = this.jobs.indexOf(job);
+        this.jobs.splice(index, 1);
+      });
+    },
   },
 };
 </script>
@@ -76,6 +83,7 @@ export default {
         <p>URL: {{ currentJob.url }}</p>
         <p>Location: {{ currentJob.location }}</p>
         <p>Salary Range: {{ currentJob.salary_range }}</p>
+        <button v-on:click="destroyJob(currentJob)">Destroy Job</button>
       </form>
     </dialog>
   </div>
