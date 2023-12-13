@@ -20,8 +20,13 @@ export default {
       });
     },
     createJob: function () {
+      console.log(this.newJobParams);
       axios
-        .post("/jobs.json", this.newJobParams)
+        .post("/jobs.json", this.newJobParams, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
           console.log("jobs create", response);
           this.jobs.push(response.data);
@@ -30,6 +35,7 @@ export default {
         .catch((error) => {
           console.log("jobs create error", error.response);
         });
+      console.log(this.newJobParams);
     },
     showJob: function (job) {
       this.currentJob = job;
@@ -42,23 +48,30 @@ export default {
 <template>
   <div class="home">
     <h1>New Job</h1>
-    <div>
-      Company Id:
-      <input type="integer" v-model="newJobParams.company_id" />
-      Title:
+    <form @submit.prevent="createJob()">
+      <span>Company Id:</span>
+      <input type="number" v-model="newJobParams.company_id" />
+      <br />
+      <span>Title:</span>
       <input type="text" v-model="newJobParams.title" />
-      Description:
+      <br />
+      <span>Description:</span>
       <input type="text" v-model="newJobParams.description" />
-      Url:
+      <br />
+      <span>Url:</span>
       <input type="text" v-model="newJobParams.url" />
-      Location:
+      <br />
+      <span>Location:</span>
       <input type="text" v-model="newJobParams.location" />
-      Active:
-      <input v-model="newJobParams.active" />
-      Salary Range:
+      <br />
+      <span>Active:</span>
+      <input type="number" v-model="newJobParams.active" />
+      <br />
+      <span>Salary Range:</span>
       <input type="text" v-model="newJobParams.salary_range" />
-      <button v-on:click="createJob()">Create Job</button>
-    </div>
+      <br />
+      <button type="submit">Create Job</button>
+    </form>
     <h1>All Jobs</h1>
     <div v-for="job in jobs" v-bind:key="job.id">
       <h2>{{ job.title }}</h2>
