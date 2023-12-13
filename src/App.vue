@@ -54,6 +54,13 @@ export default {
           console.log("jobs update error", error.response);
         });
     },
+    destroyJob: function (job) {
+      axios.delete(`/jobs/${job.id}.json`).then((response) => {
+        console.log("jobs destroy", response);
+        var index = this.jobs.indexOf(job);
+        this.jobs.splice(index, 1);
+      });
+    },
   },
 };
 </script>
@@ -119,6 +126,13 @@ export default {
         </p>
         <button v-on:click="updateJob(currentJob)">Update</button>
         <button>Close</button>
+        <h1>Job Info</h1>
+        <p>Title: {{ currentJob.title }}</p>
+        <p>Description: {{ currentJob.description }}</p>
+        <p>URL: {{ currentJob.url }}</p>
+        <p>Location: {{ currentJob.location }}</p>
+        <p>Salary Range: {{ currentJob.salary_range }}</p>
+        <button v-on:click="destroyJob(currentJob)">Destroy Job</button>
       </form>
     </dialog>
   </div>
