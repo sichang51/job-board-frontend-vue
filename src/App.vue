@@ -6,6 +6,7 @@ export default {
       message: "Welcome to Vue.js!",
       jobs: [],
       newJobParams: {},
+      editJobParams: {},
       currentJob: {},
     };
   },
@@ -39,7 +40,19 @@ export default {
     },
     showJob: function (job) {
       this.currentJob = job;
+      this.editJobParams = job;
       document.querySelector("#job-details").showModal();
+    },
+    updateJob: function (job) {
+      axios
+        .patch("/jobs/" + job.id + ".json", this.editJobParams)
+        .then((response) => {
+          console.log("jobs update", response);
+          this.currentJob = {};
+        })
+        .catch((error) => {
+          console.log("jobs update error", error.response);
+        });
     },
     destroyJob: function (job) {
       axios.delete(`/jobs/${job.id}.json`).then((response) => {
@@ -90,6 +103,29 @@ export default {
     </div>
     <dialog id="job-details">
       <form method="dialog">
+        <h3>Job Info</h3>
+        <p>
+          Title:
+          <input type="text" v-model="editJobParams.title" />
+        </p>
+        <p>
+          Description:
+          <input type="text" v-model="editJobParams.description" />
+        </p>
+        <p>
+          URL:
+          <input type="text" v-model="editJobParams.url" />
+        </p>
+        <p>
+          Location:
+          <input type="text" v-model="editJobParams.location" />
+        </p>
+        <p>
+          Salary Range:
+          <input type="text" v-model="editJobParams.salary_range" />
+        </p>
+        <button v-on:click="updateJob(currentJob)">Update</button>
+        <button>Close</button>
         <h1>Job Info</h1>
         <p>Title: {{ currentJob.title }}</p>
         <p>Description: {{ currentJob.description }}</p>
